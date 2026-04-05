@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="TurboLink VPN — Быстрый, надёжный и безопасный VPN. Полная анонимность, без ограничений." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>TurboLink VPN — Свобода в сети</title>
+
+  <!-- Userfront Toolkit -->
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ── Фоновые орбы ───────────────────────────────────────── -->
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+<!-- ============================================================
+     НАВБАР
+     ============================================================ -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <nav class="navbar__inner" aria-label="Главная навигация">
+
+      <!-- Логотип -->
+      <a href="index.html" class="navbar__logo" aria-label="TurboLink VPN — Главная">
+        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
+        Turbo<span>Link</span>
+      </a>
+
+      <!-- Ссылки навигации -->
+      <div class="navbar__nav" style="display:flex; gap:28px; align-items:center;">
+        <a href="#features" style="font-size:14px; color:var(--text-muted); transition:var(--transition);"
+           onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">
+          Возможности
+        </a>
+        <a href="#plans" style="font-size:14px; color:var(--text-muted); transition:var(--transition);"
+           onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">
+          Тарифы
+        </a>
+        <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener"
+           style="font-size:14px; color:var(--text-muted); transition:var(--transition);"
+           onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text-muted)'">
+          Telegram-бот
+        </a>
+      </div>
+
+      <!-- Auth-кнопки (обновляются через JS) -->
+      <div class="navbar__actions" id="header-auth" aria-label="Авторизация">
+        <!-- Заполняется script.js -->
+        <a href="login.html" class="btn btn-ghost btn-sm">Войти</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Попробовать</a>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     ГЕРОЙ-БЛОК
+     ============================================================ -->
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+
+    <div class="hero__badge">
+      <span class="hero__badge-dot" aria-hidden="true"></span>
+      Работает в России · Без ограничений
+    </div>
+
+    <h1 class="hero__title" id="hero-title">
+      Интернет без<br>
+      <span class="hero__title-gradient">границ и цензуры</span>
+    </h1>
+
+    <p class="hero__subtitle">
+      TurboLink VPN — молниеносная скорость, полная анонимность и надёжное шифрование.
+      Подключайтесь к любому контенту из России за считанные секунды.
+    </p>
+
+    <div class="hero__actions">
+      <a href="#plans" class="btn btn-primary btn-lg">
+        ⚡ Выбрать тариф
+      </a>
+      <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">
+        <span aria-hidden="true">✈️</span> Telegram-бот
+      </a>
+    </div>
+
+    <!-- Статистика -->
+    <div class="hero__stats" role="list" aria-label="Статистика сервиса">
+      <div class="hero__stat" role="listitem">
+        <div class="hero__stat-value">50+</div>
+        <div class="hero__stat-label">Серверов</div>
+      </div>
+      <div class="hero__divider" aria-hidden="true"></div>
+      <div class="hero__stat" role="listitem">
+        <div class="hero__stat-value">10 Гбит</div>
+        <div class="hero__stat-label">Скорость канала</div>
+      </div>
+      <div class="hero__divider" aria-hidden="true"></div>
+      <div class="hero__stat" role="listitem">
+        <div class="hero__stat-value">AES-256</div>
+        <div class="hero__stat-label">Шифрование</div>
+      </div>
+      <div class="hero__divider" aria-hidden="true"></div>
+      <div class="hero__stat" role="listitem">
+        <div class="hero__stat-value">24/7</div>
+        <div class="hero__stat-label">Поддержка</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     ПРЕИМУЩЕСТВА
+     ============================================================ -->
+<section class="section" id="features" aria-labelledby="features-title">
+  <div class="container">
+
+    <div class="section__header animate-on-scroll">
+      <div class="section__tag" aria-hidden="true">Возможности</div>
+      <h2 class="section__title" id="features-title">Всё, что нужно<br>для защиты</h2>
+      <p class="section__subtitle">
+        Профессиональный VPN без компромиссов — скорость, безопасность и простота в одном.
+      </p>
+    </div>
+
+    <div class="features-grid stagger-children" role="list" aria-label="Преимущества TurboLink">
+
+      <!-- Карточка 1 -->
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">⚡</div>
+        <h3 class="feature-card__title">Молниеносная скорость</h3>
+        <p class="feature-card__desc">
+          Серверы с каналом 10 Гбит/с. Стримите 4K, играйте онлайн и скачивайте файлы
+          без задержек и буферизации.
+        </p>
+      </article>
+
+      <!-- Карточка 2 -->
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">🔒</div>
+        <h3 class="feature-card__title">AES-256 шифрование</h3>
+        <p class="feature-card__desc">
+          Военный стандарт шифрования защищает каждый байт ваших данных.
+          Ни провайдер, ни государство не смогут перехватить трафик.
+        </p>
+      </article>
+
+      <!-- Карточка 3 -->
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">🌍</div>
+        <h3 class="feature-card__title">50+ серверов по всему миру</h3>
+        <p class="feature-card__desc">
+          Серверы в Европе, Азии и Америке. Выбирайте оптимальную точку
+          подключения для минимальной задержки.
+        </p>
+      </article>
+
+      <!-- Карточка 4 -->
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">👁️</div>
+        <h3 class="feature-card__title">No-log политика</h3>
+        <p class="feature-card__desc">
+          Мы не храним логи вашей активности. Ваши сессии, сайты и история
+          не записываются — гарантировано.
+        </p>
+      </article>
+
+      <!-- Карточка 5 -->
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">📱</div>
+        <h3 class="feature-card__title">Все устройства</h3>
+        <p class="feature-card__desc">
+          Работает на Android, iOS, Windows, macOS и роутерах.
+          Один аккаунт — неограниченное количество устройств.
+        </p>
+      </article>
+
+      <!-- Карточка 6 -->
+      <article class="feature-card" role="listitem">
+        <div class="feature-card__icon" aria-hidden="true">✈️</div>
+        <h3 class="feature-card__title">Telegram-бот</h3>
+        <p class="feature-card__desc">
+          Управляйте подпиской прямо в Telegram: оплата, конфиги,
+          поддержка — всё в одном боте без лишних кликов.
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ТАРИФЫ
+     ============================================================ -->
+<section class="section plans-section" id="plans" aria-labelledby="plans-title">
+  <div class="container">
+
+    <div class="section__header animate-on-scroll">
+      <div class="section__tag" aria-hidden="true">Тарифы</div>
+      <h2 class="section__title" id="plans-title">Выберите свой план</h2>
+      <p class="section__subtitle">
+        Простые цены без скрытых платежей. Оплата через Telegram-бот после оформления.
+      </p>
+    </div>
+
+    <div class="plans-grid stagger-children" role="list" aria-label="Тарифные планы TurboLink VPN">
+
+      <!-- ── Тариф: 14 дней ────────────────────────────────── -->
+      <article class="plan-card" role="listitem" aria-label="Тариф 14 дней — 32 рубля">
+        <div>
+          <div class="plan-period">14 дней</div>
+          <p style="font-size:12px; color:var(--text-dim); margin-top:4px;">Попробовать сервис</p>
+        </div>
+
+        <div class="plan-price">
+          <span class="plan-price__currency">₽</span>
+          <span class="plan-price__amount">32</span>
+        </div>
+
+        <ul class="plan-features" aria-label="Включено в тариф">
+          <li>Безлимитный трафик</li>
+          <li>Все 50+ серверов</li>
+          <li>Поддержка 24/7</li>
+          <li>Все протоколы</li>
+        </ul>
+
+        <button
+          class="btn btn-outline btn-full"
+          data-buy-plan="plan-14"
+          aria-label="Купить тариф 14 дней за 32 рубля"
+        >
+          Купить
+        </button>
+      </article>
+
+      <!-- ── Тариф: 1 месяц ────────────────────────────────── -->
+      <article class="plan-card" role="listitem" aria-label="Тариф 1 месяц — 53 рубля">
+        <div>
+          <div class="plan-period">1 месяц</div>
+          <p style="font-size:12px; color:var(--text-dim); margin-top:4px;">Стандартный доступ</p>
+        </div>
+
+        <div class="plan-price">
+          <span class="plan-price__currency">₽</span>
+          <span class="plan-price__amount">53</span>
+          <span class="plan-price__per">/ мес</span>
+        </div>
+
+        <ul class="plan-features" aria-label="Включено в тариф">
+          <li>Безлимитный трафик</li>
+          <li>Все 50+ серверов</li>
+          <li>Поддержка 24/7</li>
+          <li>Все протоколы</li>
+        </ul>
+
+        <button
+          class="btn btn-outline btn-full"
+          data-buy-plan="plan-1m"
+          aria-label="Купить тариф 1 месяц за 53 рубля"
+        >
+          Купить
+        </button>
+      </article>
+
+      <!-- ── Тариф: 3 месяца (ПОПУЛЯРНЫЙ) ─────────────────── -->
+      <article class="plan-card plan-card--popular" role="listitem" aria-label="Тариф 3 месяца — 174 рубля, популярный">
+        <div>
+          <div class="plan-badge">🔥 Популярный</div>
+          <div class="plan-period">3 месяца</div>
+          <p style="font-size:12px; color:var(--text-dim); margin-top:4px;">Экономия 25%</p>
+        </div>
+
+        <div class="plan-price">
+          <span class="plan-price__currency">₽</span>
+          <span class="plan-price__amount">174</span>
+          <span class="plan-price__per">/ 3 мес</span>
+        </div>
+
+        <ul class="plan-features" aria-label="Включено в тариф">
+          <li>Безлимитный трафик</li>
+          <li>Все 50+ серверов</li>
+          <li>Поддержка 24/7</li>
+          <li>Все протоколы</li>
+          <li>Приоритетная очередь</li>
+        </ul>
+
+        <button
+          class="btn btn-primary btn-full"
+          data-buy-plan="plan-3m"
+          aria-label="Купить тариф 3 месяца за 174 рубля"
+        >
+          Купить
+        </button>
+      </article>
+
+      <!-- ── Тариф: 6 месяцев ──────────────────────────────── -->
+      <article class="plan-card" role="listitem" aria-label="Тариф 6 месяцев — 327 рублей">
+        <div>
+          <div class="plan-period">6 месяцев</div>
+          <p style="font-size:12px; color:var(--text-dim); margin-top:4px;">Экономия 35%</p>
+        </div>
+
+        <div class="plan-price">
+          <span class="plan-price__currency">₽</span>
+          <span class="plan-price__amount">327</span>
+          <span class="plan-price__per">/ 6 мес</span>
+        </div>
+
+        <ul class="plan-features" aria-label="Включено в тариф">
+          <li>Безлимитный трафик</li>
+          <li>Все 50+ серверов</li>
+          <li>Поддержка 24/7</li>
+          <li>Все протоколы</li>
+          <li>Приоритетная очередь</li>
+        </ul>
+
+        <button
+          class="btn btn-outline btn-full"
+          data-buy-plan="plan-6m"
+          aria-label="Купить тариф 6 месяцев за 327 рублей"
+        >
+          Купить
+        </button>
+      </article>
+
+      <!-- ── Тариф: 12 месяцев ─────────────────────────────── -->
+      <article class="plan-card" role="listitem" aria-label="Тариф 12 месяцев — 601 рубль">
+        <div>
+          <div class="plan-badge" style="background:linear-gradient(90deg,#f59e0b,#d97706); color:#000;">
+            💎 Выгоднее всего
+          </div>
+          <div class="plan-period">12 месяцев</div>
+          <p style="font-size:12px; color:var(--text-dim); margin-top:4px;">Экономия 50%</p>
+        </div>
+
+        <div class="plan-price">
+          <span class="plan-price__currency">₽</span>
+          <span class="plan-price__amount">601</span>
+          <span class="plan-price__per">/ год</span>
+        </div>
+
+        <ul class="plan-features" aria-label="Включено в тариф">
+          <li>Безлимитный трафик</li>
+          <li>Все 50+ серверов</li>
+          <li>Поддержка 24/7</li>
+          <li>Все протоколы</li>
+          <li>Приоритетная очередь</li>
+          <li>Семейный аккаунт</li>
+        </ul>
+
+        <button
+          class="btn btn-outline btn-full"
+          data-buy-plan="plan-12m"
+          aria-label="Купить тариф 12 месяцев за 601 рубль"
+        >
+          Купить
+        </button>
+      </article>
+
+    </div><!-- /plans-grid -->
+
+    <!-- Подсказка под тарифами -->
+    <p style="text-align:center; margin-top:28px; font-size:13px; color:var(--text-dim);">
+      После оформления заказа — оплата в <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener" style="color:var(--accent);">@turbovpnlink_bot</a>.
+      Конфиг придёт автоматически.
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ / ГАРАНТИИ
+     ============================================================ -->
+<section class="section" aria-labelledby="guarantee-title">
+  <div class="container">
+
+    <div style="
+      background: var(--card);
+      border: 1px solid var(--border-accent);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    " class="animate-on-scroll">
+
+      <div>
+        <div class="section__tag" aria-hidden="true">Гарантия</div>
+        <h2 class="section__title" id="guarantee-title" style="margin-bottom:12px; font-size:clamp(24px,3vw,36px);">
+          Не понравится — вернём деньги
+        </h2>
+        <p style="color:var(--text-muted); max-width:500px; font-size:15px; line-height:1.7;">
+          Если TurboLink VPN не оправдает ваших ожиданий в течение первых 24 часов — 
+          мы вернём полную стоимость без вопросов. Просто напишите в бот.
+        </p>
+      </div>
+
+      <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener" class="btn btn-primary btn-lg" style="flex-shrink:0;">
+        ✈️ Начать сейчас
+      </a>
+
+    </div>
+
+  </div>
+</section>
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+
+      <div class="footer__logo">
+        Turbo<span>Link</span> VPN
+      </div>
+
+      <p class="footer__copy">
+        © 2024 TurboLink VPN. Все права защищены.
+      </p>
+
+      <nav class="footer__links" aria-label="Ссылки футера">
+        <a href="login.html">Войти</a>
+        <a href="signup.html">Регистрация</a>
+        <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener">Telegram</a>
+      </nav>
+
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     СКРИПТ
+     ============================================================ -->
+<script src="script.js"></script>
+
+</body>
+</html>

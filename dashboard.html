@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Личный кабинет TurboLink VPN — управляйте подпиской и просматривайте историю заказов." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <!-- Запрет индексации личного кабинета -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Личный кабинет — TurboLink VPN</title>
+
+  <!-- Userfront Toolkit -->
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Дополнительные стили для дашборда ─────────────────── */
+
+    /* Аватар пользователя */
+    .user-avatar {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), #059669);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 800;
+      color: #000;
+      font-family: var(--font-display);
+      flex-shrink: 0;
+      box-shadow: var(--shadow-btn);
+    }
+
+    /* Карточки статистики */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-accent);
+    }
+
+    .stat-card__value {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-card__label {
+      font-size: 12px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 6px;
+    }
+
+    /* Кнопка обновления заказов */
+    .orders-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    /* Скелетон загрузки */
+    .skeleton {
+      background: linear-gradient(90deg, var(--bg-alt) 25%, #1a1a1a 50%, var(--bg-alt) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-shine 1.4s infinite;
+      border-radius: var(--radius-sm);
+    }
+
+    @keyframes skeleton-shine {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .skeleton-line {
+      height: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* Профиль юзера */
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .profile-info {}
+
+    .profile-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .profile-email {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Индикатор статуса подписки */
+    .subscription-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 100px;
+    }
+
+    .subscription-status--active {
+      background: rgba(16,185,129,0.1);
+      color: var(--accent);
+      border: 1px solid var(--border-accent);
+    }
+
+    .subscription-status--inactive {
+      background: rgba(234, 179, 8, 0.1);
+      color: #ca8a04;
+      border: 1px solid rgba(234, 179, 8, 0.2);
+    }
+
+    .subscription-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Адаптив для дашборда */
+    @media (max-width: 600px) {
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-row {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<!--
+  data-page="dashboard" используется в script.js для идентификации страницы
+  и автозапуска initDashboard()
+-->
+<body data-page="dashboard">
+
+<!-- ── Фоновые орбы ───────────────────────────────────────── -->
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+<!-- ============================================================
+     НАВБАР
+     ============================================================ -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <nav class="navbar__inner" aria-label="Навигация личного кабинета">
+
+      <a href="index.html" class="navbar__logo" aria-label="TurboLink VPN — На главную">
+        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
+        Turbo<span>Link</span>
+      </a>
+
+      <div class="navbar__actions" id="header-auth" aria-label="Действия аккаунта">
+        <!-- Обновляется через script.js -->
+        <span style="font-size:13px; color:var(--text-muted);">Загрузка...</span>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     ОСНОВНОЙ КОНТЕНТ ДАШБОРДА
+     ============================================================ -->
+<main class="dashboard-layout" role="main">
+  <div class="container">
+
+    <!-- ── Заголовок дашборда ──────────────────────────────── -->
+    <header class="dashboard-header" role="region" aria-label="Информация профиля">
+
+      <div class="profile-row">
+        <!-- Аватар (первая буква email) -->
+        <div class="user-avatar" id="user-avatar" aria-hidden="true">
+          ?
+        </div>
+
+        <div class="profile-info">
+          <h1 class="dashboard-welcome">
+            Добро пожаловать, <span id="dashboard-email">...</span>!
+          </h1>
+          <p class="dashboard-subtitle" id="dashboard-full-email" style="font-size:13px; color:var(--text-muted);">
+            <!-- full email -->
+          </p>
+        </div>
+      </div>
+
+    </header><!-- /dashboard-header -->
+
+    <!-- ── Статистика (3 карточки) ────────────────────────── -->
+    <div class="stats-row animate-on-scroll" role="region" aria-label="Статистика аккаунта">
+
+      <div class="stat-card" role="img" aria-label="Количество заказов">
+        <div class="stat-card__value" id="stat-orders">0</div>
+        <div class="stat-card__label">Заказов</div>
+      </div>
+
+      <div class="stat-card" role="img" aria-label="Статус подписки">
+        <div class="stat-card__value" style="font-size:14px; padding-top:6px;">
+          <span class="subscription-status subscription-status--inactive" id="stat-status">
+            <span class="subscription-status-dot" aria-hidden="true"></span>
+            Ожидает оплаты
+          </span>
+        </div>
+        <div class="stat-card__label">Статус</div>
+      </div>
+
+      <div class="stat-card" role="img" aria-label="Потрачено рублей">
+        <div class="stat-card__value" id="stat-spent">0₽</div>
+        <div class="stat-card__label">Потрачено</div>
+      </div>
+
+    </div><!-- /stats-row -->
+
+    <!-- ── Сетка карточек дашборда ────────────────────────── -->
+    <div class="dashboard-grid">
+
+      <!-- ── Telegram-бот CTA ────────────────────────────── -->
+      <div class="dashboard-card tg-card animate-on-scroll"
+           role="region"
+           aria-label="Переход в Telegram-бот">
+
+        <div class="tg-card__text">
+          <h2>Управляйте подпиской</h2>
+          <p>
+            Оплатите заказ, получите конфиг и управляйте подпиской
+            прямо в нашем Telegram-боте.
+          </p>
+          <a
+            href="https://t.me/turbovpnlink_bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary"
+            style="margin-top:16px; display:inline-flex;"
+            aria-label="Открыть Telegram-бот TurboLink"
+          >
+            <span aria-hidden="true">✈️</span>
+            Открыть @turbovpnlink_bot
+          </a>
+        </div>
+
+        <div class="tg-card__icon" aria-hidden="true">🤖</div>
+
+      </div><!-- /tg-card -->
+
+      <!-- ── Быстрые действия ───────────────────────────── -->
+      <div class="dashboard-card animate-on-scroll"
+           role="region"
+           aria-label="Быстрые действия">
+
+        <h2 class="dashboard-card__title">
+          <span class="dashboard-card__title-icon" aria-hidden="true">⚡</span>
+          Быстрые действия
+        </h2>
+
+        <div style="display:flex; flex-direction:column; gap:10px;">
+
+          <a href="index.html#plans" class="btn btn-outline btn-full">
+            🛒 Купить тариф
+          </a>
+
+          <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener" class="btn btn-ghost btn-full">
+            ✈️ Поддержка в Telegram
+          </a>
+
+          <button
+            id="logout-btn"
+            class="btn btn-danger btn-full"
+            onclick="logout()"
+            aria-label="Выйти из аккаунта"
+          >
+            🚪 Выйти из аккаунта
+          </button>
+
+        </div>
+
+      </div><!-- /быстрые действия -->
+
+      <!-- ── История заказов (на всю ширину) ──────────────── -->
+      <div class="dashboard-card dashboard-card--full animate-on-scroll"
+           role="region"
+           aria-label="История заказов">
+
+        <div class="orders-header">
+          <h2 class="dashboard-card__title" style="margin-bottom:0;">
+            <span class="dashboard-card__title-icon" aria-hidden="true">📦</span>
+            История заказов
+          </h2>
+
+          <button
+            class="btn btn-ghost btn-sm"
+            onclick="refreshOrders()"
+            aria-label="Обновить историю заказов"
+            title="Обновить"
+          >
+            ↻ Обновить
+          </button>
+        </div>
+
+        <!-- Контейнер с заказами — заполняется через renderOrders() -->
+        <div id="orders-container" role="list" aria-label="Список заказов" aria-live="polite">
+          <!-- Скелетон при загрузке -->
+          <div aria-hidden="true">
+            <div class="skeleton skeleton-line" style="width:100%; height:64px; border-radius:12px; margin-bottom:12px;"></div>
+            <div class="skeleton skeleton-line" style="width:100%; height:64px; border-radius:12px; margin-bottom:12px;"></div>
+          </div>
+        </div>
+
+      </div><!-- /история заказов -->
+
+    </div><!-- /dashboard-grid -->
+
+  </div><!-- /container -->
+</main>
+
+<!-- ============================================================
+     ФУТЕР
+     ============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer__inner">
+      <div class="footer__logo">Turbo<span>Link</span> VPN</div>
+      <p class="footer__copy">© 2024 TurboLink VPN. Все права защищены.</p>
+      <nav class="footer__links" aria-label="Ссылки футера">
+        <a href="index.html">Главная</a>
+        <a href="https://t.me/turbovpnlink_bot" target="_blank" rel="noopener">Telegram</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     СКРИПТЫ
+     ============================================================ -->
+<script src="script.js"></script>
+
+<script>
+  /**
+   * refreshOrders()
+   * Перерендеривает список заказов и обновляет статистику.
+   */
+  function refreshOrders() {
+    renderOrders('orders-container');
+    updateDashboardStats();
+    showToast('Обновлено', 'История заказов обновлена', 'info', 2000);
+  }
+
+  /**
+   * updateDashboardStats()
+   * Обновляет карточки статистики (кол-во заказов, сумму).
+   */
+  function updateDashboardStats() {
+    const orders = loadOrders();
+
+    /* Счётчик заказов */
+    const statOrders = document.getElementById('stat-orders');
+    if (statOrders) statOrders.textContent = orders.length;
+
+    /* Потрачено */
+    const statSpent = document.getElementById('stat-spent');
+    if (statSpent) {
+      const total = orders.reduce((sum, o) => sum + (Number(o.price) || 0), 0);
+      statSpent.textContent = total + '₽';
+    }
+
+    /* Статус подписки */
+    const statStatus = document.getElementById('stat-status');
+    if (statStatus) {
+      if (orders.length > 0) {
+        statStatus.className = 'subscription-status subscription-status--inactive';
+        statStatus.innerHTML = '<span class="subscription-status-dot"></span> Ожидает оплаты';
+      } else {
+        statStatus.className = 'subscription-status subscription-status--inactive';
+        statStatus.innerHTML = '<span class="subscription-status-dot"></span> Нет активных';
+      }
+    }
+  }
+
+  /**
+   * Инициализация после загрузки страницы.
+   * DOMContentLoaded гарантирует, что initDashboard() из script.js
+   * уже запущен к этому моменту (если script.js загрузился синхронно).
+   */
+  document.addEventListener('DOMContentLoaded', function () {
+    /* Ждём чуть дольше для Userfront */
+    setTimeout(function () {
+      /* Проверка авторизации */
+      if (!isAuthenticated()) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      /* Аватар — первая буква email */
+      const avatarEl = document.getElementById('user-avatar');
+      if (avatarEl) {
+        const email = getUserEmail();
+        if (email) {
+          avatarEl.textContent = email.charAt(0).toUpperCase();
+        }
+      }
+
+      /* Имя пользователя */
+      const emailEl = document.getElementById('dashboard-email');
+      if (emailEl) {
+        const email = getUserEmail();
+        emailEl.textContent = email ? email.split('@')[0] : 'Пользователь';
+      }
+
+      /* Полный email */
+      const fullEmailEl = document.getElementById('dashboard-full-email');
+      if (fullEmailEl) {
+        fullEmailEl.textContent = getUserEmail() || '';
+      }
+
+      /* Рендер заказов */
+      renderOrders('orders-container');
+
+      /* Статистика */
+      updateDashboardStats();
+
+    }, 600); /* 600ms пауза для Userfront */
+  });
+</script>
+
+</body>
+</html>

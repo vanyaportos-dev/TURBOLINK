@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Войдите в аккаунт TurboLink VPN для управления подпиской." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Войти — TurboLink VPN</title>
+
+  <!-- Userfront Toolkit -->
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /*
+     * Дополнительные стили специфичные для страницы логина.
+     * Переопределяем некоторые цвета Userfront компонента.
+     */
+    .auth-userfront-wrap {
+      /* Обёртка для компонента Userfront */
+      width: 100%;
+    }
+
+    /* Визуальный разделитель между формой и ссылками */
+    .auth-separator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .auth-separator::before,
+    .auth-separator::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .auth-separator span {
+      font-size: 12px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Фоновые орбы ───────────────────────────────────────── -->
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+<!-- ============================================================
+     НАВБАР (минималистичный на страницах авторизации)
+     ============================================================ -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <nav class="navbar__inner" aria-label="Навигация авторизации">
+
+      <a href="index.html" class="navbar__logo" aria-label="TurboLink VPN — На главную">
+        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
+        Turbo<span>Link</span>
+      </a>
+
+      <div class="navbar__actions">
+        <a href="index.html" class="btn btn-ghost btn-sm">← Главная</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Регистрация</a>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     ФОРМА ВХОДА
+     ============================================================ -->
+<main class="auth-layout" role="main">
+
+  <!-- Логотип над формой -->
+  <a href="index.html" class="auth-logo" aria-label="TurboLink VPN — Главная">
+    <div class="auth-logo-icon" aria-hidden="true">⚡</div>
+    Turbo<span>Link</span>
+  </a>
+
+  <!-- Auth Box -->
+  <div class="auth-box" role="region" aria-label="Форма входа">
+
+    <h1 class="auth-title">Добро пожаловать</h1>
+    <p class="auth-subtitle">Войдите в аккаунт для управления подпиской</p>
+
+    <!-- ── Userfront Login Form ──────────────────────────────── -->
+    <div class="auth-userfront-wrap">
+      <login-form
+        tenant-id="wbm75m9b"
+        theme='{
+          "colors": {
+            "light":  "#ffffff",
+            "dark":   "#10B981",
+            "accent": "#10B981"
+          },
+          "colorScheme": "dark",
+          "size": "default"
+        }'
+        redirect="/dashboard.html"
+      ></login-form>
+    </div>
+    <!-- ── /Userfront Login Form ─────────────────────────────── -->
+
+    <!-- Разделитель -->
+    <div class="auth-separator" aria-hidden="true">
+      <span>или</span>
+    </div>
+
+    <!-- Ссылки -->
+    <nav class="auth-links" aria-label="Навигация по авторизации">
+      <a href="signup.html">
+        Нет аккаунта? <span>Зарегистрироваться</span>
+      </a>
+      <a href="reset.html">Забыли пароль?</a>
+    </nav>
+
+  </div><!-- /auth-box -->
+
+  <!-- Мелкий текст снизу -->
+  <p style="margin-top:24px; font-size:12px; color:var(--text-dim); text-align:center; max-width:320px;">
+    Входя в аккаунт, вы принимаете условия использования сервиса TurboLink VPN.
+  </p>
+
+</main>
+
+<!-- ============================================================
+     СКРИПТ
+     ============================================================ -->
+<script src="script.js"></script>
+
+<script>
+  /**
+   * Если пользователь уже авторизован — перенаправляем на дашборд.
+   * Проверяем через небольшую задержку, чтобы Userfront успел загрузиться.
+   */
+  document.addEventListener('DOMContentLoaded', function () {
+    /* Небольшая пауза для инициализации Userfront */
+    setTimeout(function () {
+      if (isAuthenticated()) {
+        window.location.href = 'dashboard.html';
+      }
+    }, 500);
+  });
+</script>
+
+</body>
+</html>

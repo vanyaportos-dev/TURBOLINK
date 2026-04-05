@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Создайте аккаунт TurboLink VPN и получите доступ к быстрому и безопасному интернету." />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Регистрация — TurboLink VPN</title>
+
+  <!-- Userfront Toolkit -->
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .auth-userfront-wrap {
+      width: 100%;
+    }
+
+    .auth-separator {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .auth-separator::before,
+    .auth-separator::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .auth-separator span {
+      font-size: 12px;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+
+    /* Блок с преимуществами регистрации */
+    .signup-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .signup-perk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .signup-perk-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Фоновые орбы ───────────────────────────────────────── -->
+<div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+<div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+<!-- ============================================================
+     НАВБАР
+     ============================================================ -->
+<header class="navbar" role="banner">
+  <div class="container">
+    <nav class="navbar__inner" aria-label="Навигация авторизации">
+
+      <a href="index.html" class="navbar__logo" aria-label="TurboLink VPN — На главную">
+        <div class="navbar__logo-icon" aria-hidden="true">⚡</div>
+        Turbo<span>Link</span>
+      </a>
+
+      <div class="navbar__actions">
+        <a href="index.html" class="btn btn-ghost btn-sm">← Главная</a>
+        <a href="login.html" class="btn btn-primary btn-sm">Войти</a>
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================================
+     ФОРМА РЕГИСТРАЦИИ
+     ============================================================ -->
+<main class="auth-layout" role="main">
+
+  <!-- Логотип -->
+  <a href="index.html" class="auth-logo" aria-label="TurboLink VPN — Главная">
+    <div class="auth-logo-icon" aria-hidden="true">⚡</div>
+    Turbo<span>Link</span>
+  </a>
+
+  <!-- Auth Box -->
+  <div class="auth-box" role="region" aria-label="Форма регистрации">
+
+    <h1 class="auth-title">Создать аккаунт</h1>
+    <p class="auth-subtitle">Присоединяйтесь к тысячам пользователей TurboLink VPN</p>
+
+    <!-- Преимущества регистрации -->
+    <div class="signup-perks" role="list" aria-label="Что вы получите">
+      <div class="signup-perk" role="listitem">
+        <span class="signup-perk-icon" aria-hidden="true">⚡</span>
+        Мгновенный доступ ко всем серверам
+      </div>
+      <div class="signup-perk" role="listitem">
+        <span class="signup-perk-icon" aria-hidden="true">📦</span>
+        История заказов в личном кабинете
+      </div>
+      <div class="signup-perk" role="listitem">
+        <span class="signup-perk-icon" aria-hidden="true">🤖</span>
+        Управление через Telegram-бот
+      </div>
+    </div>
+
+    <!-- ── Userfront Signup Form ─────────────────────────────── -->
+    <div class="auth-userfront-wrap">
+      <signup-form
+        tenant-id="wbm75m9b"
+        theme='{
+          "colors": {
+            "light":  "#ffffff",
+            "dark":   "#10B981",
+            "accent": "#10B981"
+          },
+          "colorScheme": "dark",
+          "size": "default"
+        }'
+        redirect="/dashboard.html"
+      ></signup-form>
+    </div>
+    <!-- ── /Userfront Signup Form ────────────────────────────── -->
+
+    <!-- Разделитель -->
+    <div class="auth-separator" aria-hidden="true">
+      <span>уже есть аккаунт?</span>
+    </div>
+
+    <!-- Ссылки -->
+    <nav class="auth-links" aria-label="Навигация по авторизации">
+      <a href="login.html">Уже зарегистрированы? <span>Войти</span></a>
+    </nav>
+
+  </div><!-- /auth-box -->
+
+  <!-- Мелкий текст -->
+  <p style="margin-top:24px; font-size:12px; color:var(--text-dim); text-align:center; max-width:320px;">
+    Регистрируясь, вы принимаете условия использования. Ваши данные защищены шифрованием.
+  </p>
+
+</main>
+
+<!-- ============================================================
+     СКРИПТ
+     ============================================================ -->
+<script src="script.js"></script>
+
+<script>
+  /**
+   * Если пользователь уже авторизован — перенаправляем на дашборд.
+   */
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      if (isAuthenticated()) {
+        window.location.href = 'dashboard.html';
+      }
+    }, 500);
+  });
+</script>
+
+</body>
+</html>
