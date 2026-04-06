@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Личный кабинет — TurboLink VPN</title>
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+<div class="bg-canvas">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <span class="nav-logo-text">Turbo<span>Link</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><i class="fa-solid fa-house"></i> Главная</a>
+      <a href="index.html#pricing" class="nav-link"><i class="fa-solid fa-tag"></i> Тарифы</a>
+      <a href="https://t.me/turbovpnlink_bot" target="_blank" class="btn-nav-secondary">
+        <i class="fa-brands fa-telegram"></i> Бот
+      </a>
+      <button onclick="logout()" class="btn-nav-secondary" style="cursor:pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i> Выйти
+      </button>
+    </div>
+    <button class="nav-toggle" id="nav-toggle"><i class="fa-solid fa-bars"></i></button>
+  </nav>
+
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="index.html"><i class="fa-solid fa-house"></i> Главная</a>
+    <a href="index.html#pricing"><i class="fa-solid fa-tag"></i> Тарифы</a>
+    <a href="https://t.me/turbovpnlink_bot" target="_blank"><i class="fa-brands fa-telegram"></i> Telegram-бот</a>
+    <button onclick="logout()" style="color:var(--text-2)!important;"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
+  </div>
+
+  <!-- DASHBOARD -->
+  <main class="dashboard-page">
+
+    <!-- Greeting -->
+    <div class="dashboard-greeting">
+      <h1>Добро пожаловать, <span id="dash-email">...</span>!</h1>
+      <p><i class="fa-solid fa-calendar-day" style="color:var(--accent);"></i> Сегодня <span id="dash-date"></span></p>
+    </div>
+
+    <!-- Grid -->
+    <div class="dashboard-grid">
+
+      <!-- User info card -->
+      <div class="dash-card" style="animation-delay:.05s">
+        <div class="dash-card-header">
+          <div class="dash-card-icon"><i class="fa-solid fa-user"></i></div>
+          <div class="dash-card-title">Профиль</div>
+        </div>
+        <div class="user-info-row">
+          <div class="user-avatar" id="dash-avatar">U</div>
+          <div>
+            <div class="user-email" id="dash-email-info">...</div>
+            <div class="user-since">Аккаунт активен</div>
+          </div>
+        </div>
+        <div style="margin-top:18px;">
+          <div class="status-dot">VPN доступен</div>
+        </div>
+      </div>
+
+      <!-- Stats card -->
+      <div class="dash-card" style="animation-delay:.1s">
+        <div class="dash-card-header">
+          <div class="dash-card-icon"><i class="fa-solid fa-chart-simple"></i></div>
+          <div class="dash-card-title">Статистика</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px;">
+          <div style="text-align:center;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;">
+            <div style="font-family:var(--font-head);font-size:1.6rem;font-weight:800;color:var(--accent);" id="orders-count">0</div>
+            <div style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Заказов</div>
+          </div>
+          <div style="text-align:center;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;">
+            <div style="font-family:var(--font-head);font-size:1.6rem;font-weight:800;color:var(--accent);">27</div>
+            <div style="font-size:.75rem;color:var(--text-3);margin-top:2px;">Серверов</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bot CTA — full width -->
+      <div class="dash-card accent-border span-2" style="animation-delay:.15s">
+        <div class="dash-card-header">
+          <div class="dash-card-icon"><i class="fa-brands fa-telegram"></i></div>
+          <div class="dash-card-title">Купить или управлять подпиской</div>
+        </div>
+        <div class="bot-cta-inner">
+          <div class="bot-cta-text">
+            <h3>Telegram-бот для управления VPN</h3>
+            <p>Покупка тарифов, получение ключей и управление подпиской — всё через бот <strong>@turbovpnlink_bot</strong></p>
+          </div>
+          <a href="https://t.me/turbovpnlink_bot" target="_blank" class="btn btn-primary">
+            <i class="fa-brands fa-telegram"></i> Перейти в бот
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick buy — full width -->
+      <div class="dash-card span-2" style="animation-delay:.2s">
+        <div class="dash-card-header">
+          <div class="dash-card-icon"><i class="fa-solid fa-tag"></i></div>
+          <div class="dash-card-title">Быстрая покупка</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-ghost btn-sm" onclick="handleBuy('14 дней', 115.36)">
+            <i class="fa-solid fa-calendar-days"></i> 14 дней — 115.36₽
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="handleBuy('1 месяц', 134.45)">
+            <i class="fa-solid fa-calendar-days"></i> 1 месяц — 134.45₽
+          </button>
+          <button class="btn btn-secondary btn-sm" onclick="handleBuy('3 месяца', 260.22)">
+            <i class="fa-solid fa-fire"></i> 3 месяца — 260.22₽
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="handleBuy('6 месяцев', 327.88)">
+            <i class="fa-solid fa-calendar-days"></i> 6 мес — 327.88₽
+          </button>
+          <button class="btn btn-ghost btn-sm" onclick="handleBuy('12 месяцев', 601.98)">
+            <i class="fa-solid fa-calendar-days"></i> 12 мес — 601.98₽
+          </button>
+        </div>
+      </div>
+
+      <!-- Orders — full width -->
+      <div class="dash-card span-2" style="animation-delay:.25s">
+        <div class="dash-card-header">
+          <div class="dash-card-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+          <div class="dash-card-title">История заказов</div>
+        </div>
+        <div id="orders-container">
+          <div class="orders-empty">
+            <i class="fa-solid fa-box-open"></i>
+            <p>Заказов пока нет</p>
+            <p style="font-size:.8rem;margin-top:4px;color:var(--text-3);">Купите тариф выше — он появится здесь</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info card -->
+      <div class="dash-card span-2" style="background:linear-gradient(120deg,rgba(16,185,129,.07) 0%,var(--card) 60%);border-color:var(--border-accent);animation-delay:.3s">
+        <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+          <i class="fa-solid fa-circle-info" style="color:var(--accent);font-size:1.4rem;margin-top:2px;flex-shrink:0;"></i>
+          <div>
+            <h3 style="font-family:var(--font-head);font-size:1rem;font-weight:700;margin-bottom:6px;">Как получить ключ VPN?</h3>
+            <p style="font-size:.875rem;color:var(--text-2);line-height:1.7;">
+              Выберите тариф выше → нажмите «Купить» → вас перенаправит в Telegram-бот
+              <a href="https://t.me/turbovpnlink_bot" target="_blank" style="color:var(--accent)">@turbovpnlink_bot</a>,
+              где вы оплатите и мгновенно получите ключ для подключения.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dashboard-grid -->
+
+    <!-- Logout -->
+    <div style="text-align:center;margin-top:20px;padding-bottom:20px;">
+      <button onclick="logout()" class="btn btn-ghost btn-sm" style="color:var(--text-3);">
+        <i class="fa-solid fa-right-from-bracket"></i> Выйти из аккаунта
+      </button>
+    </div>
+
+  </main>
+
+</div><!-- /page-wrapper -->
+
+<script>
+  // Set today's date
+  document.addEventListener('DOMContentLoaded', () => {
+    const dateEl = document.getElementById('dash-date');
+    if (dateEl) {
+      dateEl.textContent = new Date().toLocaleDateString('ru-RU', {
+        weekday: 'long', day: 'numeric', month: 'long'
+      });
+    }
+    // Update orders count
+    const orders = JSON.parse(localStorage.getItem('tl_orders') || '[]');
+    const countEl = document.getElementById('orders-count');
+    if (countEl) countEl.textContent = orders.length;
+  });
+</script>
+</body>
+</html>
