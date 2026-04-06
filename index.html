@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TurboLink VPN — Быстрый и безопасный VPN</title>
+  <meta name="description" content="TurboLink VPN — безлимитный VPN с 27 серверами, обходом блокировок DPI, поддержкой до 5 устройств. От 32₽." />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+<!-- ── Animated Background ── -->
+<div class="bg-canvas">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- ══════════════════════════════════
+       NAV
+  ══════════════════════════════════ -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <span class="nav-logo-text">Turbo<span>Link</span></span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Преимущества</a>
+      <a href="#pricing"  class="nav-link">Тарифы</a>
+      <a href="#faq"      class="nav-link">FAQ</a>
+      <a href="login.html"    class="btn-nav-secondary" id="nav-login"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+      <a href="signup.html"   class="btn-nav-primary"   id="nav-signup"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+      <a href="dashboard.html" class="btn-nav-secondary" id="nav-profile" style="display:none"><i class="fa-solid fa-gauge-high"></i> Кабинет</a>
+      <button onclick="logout()" class="btn-nav-secondary" id="nav-logout" style="display:none"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
+    </div>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Меню">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="#features"><i class="fa-solid fa-star"></i> Преимущества</a>
+    <a href="#pricing"><i class="fa-solid fa-tag"></i> Тарифы</a>
+    <a href="#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+    <a href="login.html"    id="drawer-login"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+    <a href="dashboard.html" id="drawer-profile" style="display:none"><i class="fa-solid fa-gauge-high"></i> Личный кабинет</a>
+    <button onclick="logout()" id="drawer-logout" style="display:none"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
+    <a href="signup.html" class="drawer-primary" id="drawer-signup"><i class="fa-solid fa-user-plus"></i> Зарегистрироваться</a>
+  </div>
+
+  <!-- ══════════════════════════════════
+       HERO
+  ══════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-badge">
+      <i class="fa-solid fa-bolt"></i>
+      Молниеносная скорость · Полная анонимность
+    </div>
+
+    <h1 class="hero-title">
+      Интернет без<br>
+      <span class="accent">ограничений</span>
+    </h1>
+
+    <p class="hero-subtitle">
+      TurboLink VPN — ваш щит в цифровом мире. 27 серверов, обход любых блокировок,
+      безлимитный трафик и ноль логов. От <strong style="color:var(--accent)">115.36₽</strong>.
+    </p>
+
+    <div class="hero-cta">
+      <a href="#pricing" class="btn btn-primary btn-lg">
+        <i class="fa-solid fa-rocket"></i> Начать сейчас
+      </a>
+      <a href="https://t.me/turbovpnlink_bot" target="_blank" class="btn btn-secondary btn-lg">
+        <i class="fa-brands fa-telegram"></i> Telegram-бот
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">27</div>
+        <div class="hero-stat-label">Серверов</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">∞</div>
+        <div class="hero-stat-label">Трафик</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">5</div>
+        <div class="hero-stat-label">Устройств</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">0</div>
+        <div class="hero-stat-label">Логов</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════
+       FEATURES
+  ══════════════════════════════════ -->
+  <section class="section" id="features">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa-solid fa-sparkles"></i> Преимущества</div>
+      <h2 class="section-title">Почему TurboLink?</h2>
+      <p class="section-desc">Всё, что нужно для безопасного и свободного интернета</p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-globe"></i></div>
+        <div class="feature-title">27 серверов по миру</div>
+        <div class="feature-desc">Серверы в Европе, Азии, Америке и СНГ. Подключайтесь к любой точке мира за секунды.</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="feature-title">Обход DPI и WhiteList</div>
+        <div class="feature-desc">Продвинутый обход глубокой инспекции пакетов. Работает там, где другие VPN падают.</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-infinity"></i></div>
+        <div class="feature-title">Безлимитный трафик</div>
+        <div class="feature-desc">Никаких ограничений по скорости и объёму. Стримьте, качайте, общайтесь без лимитов.</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-eye-slash"></i></div>
+        <div class="feature-title">Строгая политика No-Log</div>
+        <div class="feature-desc">Мы не храним никаких данных о вашей активности. Полная анонимность гарантирована.</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+        <div class="feature-title">До 5 устройств</div>
+        <div class="feature-desc">Один ключ — пять устройств. iOS, Android, Windows, macOS, Linux и роутеры.</div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon"><i class="fa-brands fa-telegram"></i></div>
+        <div class="feature-title">Мгновенная выдача</div>
+        <div class="feature-desc">Ключ приходит моментально через Telegram-бот после оплаты. Без ожидания.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════
+       PRICING
+  ══════════════════════════════════ -->
+  <section class="section" id="pricing">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa-solid fa-tag"></i> Тарифы</div>
+      <h2 class="section-title">Простые цены</h2>
+      <p class="section-desc">Выберите подходящий период. Чем дольше — тем выгоднее.</p>
+    </div>
+
+    <div class="pricing-grid">
+
+      <!-- 14 дней -->
+      <div class="pricing-card reveal">
+        <div class="pricing-period">14 дней</div>
+        <div class="pricing-price"><span>₽</span>115.36</div>
+        <div class="pricing-perday">≈ 8.2₽ / день</div>
+        <ul class="pricing-features">
+          <li><i class="fa-solid fa-check"></i> 27 серверов</li>
+          <li><i class="fa-solid fa-check"></i> Безлимит</li>
+          <li><i class="fa-solid fa-check"></i> 5 устройств</li>
+          <li><i class="fa-solid fa-check"></i> No-Log</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="handleBuy('14 дней', 115.36)">
+          <i class="fa-solid fa-cart-plus"></i> Купить
+        </button>
+      </div>
+
+      <!-- 1 месяц -->
+      <div class="pricing-card reveal">
+        <div class="pricing-discount">−45%</div>
+        <div class="pricing-period">1 месяц</div>
+        <div class="pricing-price"><span>₽</span>134.45</div>
+        <div class="pricing-perday">≈ 4.5₽ / день</div>
+        <ul class="pricing-features">
+          <li><i class="fa-solid fa-check"></i> 27 серверов</li>
+          <li><i class="fa-solid fa-check"></i> Безлимит</li>
+          <li><i class="fa-solid fa-check"></i> 5 устройств</li>
+          <li><i class="fa-solid fa-check"></i> No-Log</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="handleBuy('1 месяц', 134.45)">
+          <i class="fa-solid fa-cart-plus"></i> Купить
+        </button>
+      </div>
+
+      <!-- 3 месяца — POPULAR -->
+      <div class="pricing-card popular reveal">
+        <div class="pricing-badge"><i class="fa-solid fa-fire"></i> Хит продаж</div>
+        <div class="pricing-discount">−64%</div>
+        <div class="pricing-period">3 месяца</div>
+        <div class="pricing-price"><span>₽</span>260.22</div>
+        <div class="pricing-perday">≈ 2.9₽ / день</div>
+        <ul class="pricing-features">
+          <li><i class="fa-solid fa-check"></i> 27 серверов</li>
+          <li><i class="fa-solid fa-check"></i> Безлимит</li>
+          <li><i class="fa-solid fa-check"></i> 5 устройств</li>
+          <li><i class="fa-solid fa-check"></i> No-Log</li>
+        </ul>
+        <button class="btn btn-primary" onclick="handleBuy('3 месяца', 260.22)">
+          <i class="fa-solid fa-rocket"></i> Купить
+        </button>
+      </div>
+
+      <!-- 6 месяцев -->
+      <div class="pricing-card reveal">
+        <div class="pricing-discount">−77%</div>
+        <div class="pricing-period">6 месяцев</div>
+        <div class="pricing-price"><span>₽</span>327.88</div>
+        <div class="pricing-perday">≈ 1.8₽ / день</div>
+        <ul class="pricing-features">
+          <li><i class="fa-solid fa-check"></i> 27 серверов</li>
+          <li><i class="fa-solid fa-check"></i> Безлимит</li>
+          <li><i class="fa-solid fa-check"></i> 5 устройств</li>
+          <li><i class="fa-solid fa-check"></i> No-Log</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="handleBuy('6 месяцев', 327.88)">
+          <i class="fa-solid fa-cart-plus"></i> Купить
+        </button>
+      </div>
+
+      <!-- 12 месяцев -->
+      <div class="pricing-card reveal">
+        <div class="pricing-discount">−79%</div>
+        <div class="pricing-period">12 месяцев</div>
+        <div class="pricing-price"><span>₽</span>601.98</div>
+        <div class="pricing-perday">≈ 1.6₽ / день</div>
+        <ul class="pricing-features">
+          <li><i class="fa-solid fa-check"></i> 27 серверов</li>
+          <li><i class="fa-solid fa-check"></i> Безлимит</li>
+          <li><i class="fa-solid fa-check"></i> 5 устройств</li>
+          <li><i class="fa-solid fa-check"></i> No-Log</li>
+        </ul>
+        <button class="btn btn-ghost" onclick="handleBuy('12 месяцев', 601.98)">
+          <i class="fa-solid fa-cart-plus"></i> Купить
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════
+       IP CHECKER
+  ══════════════════════════════════ -->
+  <section class="section" id="ip">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa-solid fa-magnifying-glass"></i> Инструмент</div>
+      <h2 class="section-title">Проверить свой IP</h2>
+      <p class="section-desc">Узнайте, что видят сайты, когда вы подключаетесь</p>
+    </div>
+
+    <div class="ip-checker reveal">
+      <i class="fa-solid fa-network-wired" style="font-size:2.2rem;color:var(--accent);margin-bottom:16px;display:block;"></i>
+      <h3 style="font-family:var(--font-head);font-size:1.15rem;font-weight:700;margin-bottom:8px;">Ваш текущий IP-адрес</h3>
+      <p style="font-size:.875rem;color:var(--text-2);margin-bottom:4px;">Нажмите кнопку, чтобы узнать ваш IP и геолокацию</p>
+
+      <div class="ip-result" id="ip-result">
+        <span style="color:var(--text-3);font-size:.85rem;">Нажмите кнопку ниже</span>
+      </div>
+
+      <button class="btn btn-secondary" onclick="checkIP()">
+        <i class="fa-solid fa-radar"></i> Проверить IP
+      </button>
+
+      <p style="font-size:.78rem;color:var(--text-3);margin-top:20px;line-height:1.6;">
+        <i class="fa-solid fa-lock" style="color:var(--accent);"></i>
+        С TurboLink VPN ваш реальный IP скрыт — сайты видят IP нашего сервера
+      </p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ══════════════════════════════════
+       FAQ
+  ══════════════════════════════════ -->
+  <section class="section" id="faq">
+    <div class="section-header">
+      <div class="section-tag"><i class="fa-solid fa-circle-question"></i> FAQ</div>
+      <h2 class="section-title">Частые вопросы</h2>
+      <p class="section-desc">Не нашли ответ? Пишите в Telegram-бот</p>
+    </div>
+
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Как получить ключ после оплаты?</span>
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          После оплаты перейдите в Telegram-бот <strong>@turbovpnlink_bot</strong>. Ключ будет выдан автоматически в течение нескольких секунд. Никакого ожидания — всё работает моментально.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>На каких устройствах работает TurboLink VPN?</span>
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          Поддерживаются iOS, Android, Windows, macOS, Linux, а также роутеры. Один ключ позволяет подключить до 5 устройств одновременно.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Что такое DPI bypass и WhiteList?</span>
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          DPI (Deep Packet Inspection) — технология, которую провайдеры используют для блокировки VPN. Мы применяем специальное маскирование трафика, которое делает его неотличимым от обычного HTTPS. WhiteList — список доменов, трафик к которым идёт напрямую (например, российские банки и сервисы), чтобы они работали корректно.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Вы правда не храните логи?</span>
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          Абсолютно. Мы придерживаемся строгой политики No-Log: не записываем ваш IP, посещённые сайты, объём трафика или время сессий. Ваша конфиденциальность — наш приоритет.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Как продлить подписку?</span>
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          Просто купите новый тариф через сайт или Telegram-бот. При продлении новый период добавляется к оставшемуся — ключ меняться не будет.
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question">
+          <span>Есть ли возврат средств?</span>
+          <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+        </div>
+        <div class="faq-answer">
+          Да. Если VPN не работает у вас в течение первых 24 часов, мы вернём деньги. Напишите в поддержку через Telegram-бот.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       CTA BANNER
+  ══════════════════════════════════ -->
+  <section style="padding:0 24px 96px;">
+    <div style="max-width:900px;margin:0 auto;background:linear-gradient(135deg,rgba(16,185,129,.12) 0%,var(--card) 60%);border:1px solid var(--border-accent);border-radius:var(--radius-xl);padding:60px 40px;text-align:center;" class="reveal">
+      <div style="font-size:2.5rem;margin-bottom:16px;">🛡️</div>
+      <h2 style="font-family:var(--font-head);font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;margin-bottom:12px;">Готовы к свободному интернету?</h2>
+      <p style="color:var(--text-2);font-size:.95rem;max-width:480px;margin:0 auto 32px;">Первые 14 дней всего за <strong style="color:var(--accent)">115.36₽</strong>. Без скрытых платежей, без лишних вопросов.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <a href="#pricing" class="btn btn-primary btn-lg"><i class="fa-solid fa-bolt"></i> Выбрать тариф</a>
+        <a href="https://t.me/turbovpnlink_bot" target="_blank" class="btn btn-secondary btn-lg"><i class="fa-brands fa-telegram"></i> Перейти в бот</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       FOOTER
+  ══════════════════════════════════ -->
+  <footer>
+    <div class="footer">
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="justify-content:flex-start;">
+            <div class="nav-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+            <span class="nav-logo-text">Turbo<span>Link</span></span>
+          </a>
+          <p>Безопасный и быстрый VPN с обходом блокировок. Ваша анонимность — наш приоритет.</p>
+        </div>
+
+        <div class="footer-links">
+          <h4>Сервис</h4>
+          <ul>
+            <li><a href="#features"><i class="fa-solid fa-star fa-fw"></i> Преимущества</a></li>
+            <li><a href="#pricing"><i class="fa-solid fa-tag fa-fw"></i> Тарифы</a></li>
+            <li><a href="#faq"><i class="fa-solid fa-circle-question fa-fw"></i> FAQ</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Аккаунт</h4>
+          <ul>
+            <li><a href="login.html"><i class="fa-solid fa-right-to-bracket fa-fw"></i> Войти</a></li>
+            <li><a href="signup.html"><i class="fa-solid fa-user-plus fa-fw"></i> Регистрация</a></li>
+            <li><a href="dashboard.html"><i class="fa-solid fa-gauge-high fa-fw"></i> Кабинет</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links">
+          <h4>Поддержка</h4>
+          <ul>
+            <li><a href="https://t.me/turbovpnlink_bot" target="_blank"><i class="fa-brands fa-telegram fa-fw"></i> @turbovpnlink_bot</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 TurboLink VPN. Все права защищены.</p>
+        <div class="footer-socials">
+          <a href="https://t.me/turbovpnlink_bot" target="_blank" title="Telegram">
+            <i class="fa-brands fa-telegram"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-wrapper -->
+</body>
+</html>
