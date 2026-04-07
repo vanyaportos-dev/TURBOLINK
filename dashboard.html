@@ -14,7 +14,6 @@
 </head>
 <body>
 
-<!-- ⬇️⬇️⬇️ ВОТ ЭТОТ СКРИПТ ДОБАВИТЬ СРАЗУ ПОСЛЕ <body> ⬇️⬇️⬇️ -->
 <script>
   // Проверка имени при загрузке дашборда
   (function() {
@@ -23,7 +22,6 @@
     if (!username) {
       window.location.href = 'onboarding.html';
     } else {
-      // Ждём загрузки DOM и заменяем email на имя
       document.addEventListener('DOMContentLoaded', () => {
         const greetEl = document.getElementById('dash-email');
         if (greetEl) greetEl.textContent = username;
@@ -37,12 +35,13 @@
     }
   })();
 </script>
-<!-- ⬆️⬆️⬆️ ВОТ ЭТОТ СКРИПТ ДОБАВИТЬ СРАЗУ ПОСЛЕ <body> ⬆️⬆️⬆️ -->
 
 <div class="bg-canvas">
-  <div class="bg-grid"></div>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="blob blob-5"></div>
 </div>
 
 <div class="page-wrapper">
