@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TurboLink — Подключение</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', 'Courier New', monospace;
+      min-height: 100vh;
+      background: #05050A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      color: #ffffff;
+    }
+
+    /* ── Жидкий фон (блобы) ── */
+    .liquid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: 0.65;
+      mix-blend-mode: screen;
+      animation: floatBlob infinite alternate;
+      will-change: transform;
+    }
+
+    .blob-1 {
+      background: #10B981;
+      width: 65vw; height: 65vw;
+      top: -10%; left: -10%;
+      animation-duration: 10s;
+      animation-delay: 0s;
+    }
+    .blob-2 {
+      background: #3B82F6;
+      width: 55vw; height: 55vw;
+      bottom: -20%; right: -15%;
+      animation-duration: 11s;
+      animation-delay: -2s;
+    }
+    .blob-3 {
+      background: #8B5CF6;
+      width: 70vw; height: 70vw;
+      top: 20%; left: 30%;
+      animation-duration: 9s;
+      animation-delay: -4s;
+    }
+    .blob-4 {
+      background: #F59E0B;
+      width: 50vw; height: 50vw;
+      bottom: 5%; left: 5%;
+      animation-duration: 13s;
+      animation-delay: -6s;
+      opacity: 0.5;
+    }
+
+    @keyframes floatBlob {
+      0%   { transform: translate(0, 0) scale(1); }
+      20%  { transform: translate(15%, -10%) scale(1.15); }
+      40%  { transform: translate(-8%, 18%) scale(0.9); }
+      60%  { transform: translate(20%, 12%) scale(1.1); }
+      80%  { transform: translate(-12%, -15%) scale(0.95); }
+      100% { transform: translate(8%, -8%) scale(1.05); }
+    }
+
+    /* ── Стеклянная капсула ── */
+    .glass-capsule {
+      position: relative;
+      z-index: 20;
+      background: rgba(8, 8, 14, 0.78);
+      backdrop-filter: blur(40px) saturate(180%);
+      -webkit-backdrop-filter: blur(40px) saturate(180%);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.03) inset,
+        0 0 60px rgba(16, 185, 129, 0.06);
+      padding: 40px 44px;
+      width: 90%;
+      max-width: 520px;
+      animation: capsuleIn 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.05) both;
+    }
+
+    @keyframes capsuleIn {
+      from { opacity: 0; transform: scale(0.97) translateY(16px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    /* ── Заголовок терминала ── */
+    .term-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .term-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .term-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .term-dot.r { background: #FF5F57; }
+    .term-dot.y { background: #FFBD2E; }
+    .term-dot.g { background: #28CA41; }
+
+    .term-title {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-left: auto;
+    }
+
+    /* ── Вывод строк ── */
+    .term-output {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-height: 130px;
+    }
+
+    .term-line {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.92rem;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .term-line.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .term-prompt {
+      color: #10B981;
+      user-select: none;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+
+    .term-text {
+      color: rgba(255, 255, 255, 0.88);
+      line-height: 1.5;
+    }
+
+    .term-text.accent { color: #10B981; }
+    .term-text.dim    { color: rgba(255,255,255,0.45); }
+
+    /* ── Мигающий курсор ── */
+    .cursor {
+      display: inline-block;
+      width: 8px; height: 1.1em;
+      background: #10B981;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+      animation: blink 0.7s step-end infinite;
+      opacity: 0;
+    }
+    .cursor.active { opacity: 1; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0; }
+    }
+
+    /* ── Нижняя строка ── */
+    .term-footer {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .term-brand {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .term-brand i { color: #10B981; margin: 0 3px; }
+
+    .term-status {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.2);
+    }
+    .term-status.connected { color: #10B981; }
+  </style>
+</head>
+<body>
+
+<!-- Жидкий фон -->
+<div class="liquid-bg">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<!-- Терминальная капсула -->
+<div class="glass-capsule">
+  <div class="term-header">
+    <div class="term-dots">
+      <div class="term-dot r"></div>
+      <div class="term-dot y"></div>
+      <div class="term-dot g"></div>
+    </div>
+    <span class="term-title">turbolink — shell</span>
+  </div>
+
+  <div class="term-output" id="termOutput">
+    <!-- строки вставляются JS -->
+  </div>
+
+  <div class="term-footer">
+    <span class="term-brand">
+      <i class="fa-solid fa-bolt"></i> TURBOLINK VPN
+    </span>
+    <span class="term-status" id="termStatus">инициализация...</span>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const lines = [
+      { prompt: '>', text: 'sudo turbo.link --connect',         cls: '' },
+      { prompt: '>', text: 'Проверка сертификатов... ',         cls: '', suffix: 'OK', suffixCls: 'accent' },
+      { prompt: '>', text: 'Туннель активен',                   cls: 'accent' },
+      { prompt: '>', text: 'Готово.',                           cls: 'accent', last: true },
+    ];
+
+    const output   = document.getElementById('termOutput');
+    const statusEl = document.getElementById('termStatus');
+    let cursorEl   = null;
+
+    function renderLine(idx) {
+      const l    = lines[idx];
+      const div  = document.createElement('div');
+      div.className = 'term-line';
+
+      const prompt = document.createElement('span');
+      prompt.className = 'term-prompt';
+      prompt.textContent = l.prompt;
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'term-text' + (l.cls ? ' ' + l.cls : '');
+      textSpan.textContent = l.text;
+
+      div.appendChild(prompt);
+      div.appendChild(textSpan);
+
+      if (l.suffix) {
+        const suf = document.createElement('span');
+        suf.className = 'term-text ' + (l.suffixCls || '');
+        suf.textContent = l.suffix;
+        div.appendChild(suf);
+      }
+
+      if (l.last) {
+        cursorEl = document.createElement('span');
+        cursorEl.className = 'cursor';
+        div.appendChild(cursorEl);
+      }
+
+      output.appendChild(div);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          div.classList.add('visible');
+          if (l.last && cursorEl) {
+            cursorEl.classList.add('active');
+            statusEl.className = 'term-status connected';
+            statusEl.textContent = 'подключено';
+          }
+        });
+      });
+    }
+
+    // Последовательно показываем строки
+    const baseDelay = 180;
+    lines.forEach((_, i) => {
+      setTimeout(() => renderLine(i), i * baseDelay + 120);
+    });
+
+    // После последней строки + 800мс → редирект на home.html
+    const totalDelay = lines.length * baseDelay + 120 + 800;
+    setTimeout(() => {
+      window.location.href = 'home.html';
+    }, totalDelay);
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Статус серверов — TurboLink VPN</title>
+  <meta name="description" content="Актуальный статус всех VPN-серверов TurboLink в реальном времени." />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+<!-- ── Animated Background ── -->
+<div class="bg-canvas">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+  <div class="blob blob-5"></div>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- ══════════════════════════════════
+       NAV
+  ══════════════════════════════════ -->
+  <nav class="nav">
+    <a href="home.html" class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <span class="nav-logo-text">Turbo<span>Link</span></span>
+    </a>
+
+    <div class="nav-links">
+      <a href="home.html#features" class="nav-link">Преимущества</a>
+      <a href="home.html#pricing"  class="nav-link">Тарифы</a>
+      <a href="home.html#faq"      class="nav-link">FAQ</a>
+      <a href="servers.html"       class="nav-link" style="color:var(--accent)">Серверы</a>
+      <a href="login.html"    class="btn-nav-secondary" id="nav-login"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+      <a href="signup.html"   class="btn-nav-primary"   id="nav-signup"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+      <a href="dashboard.html" class="btn-nav-secondary" id="nav-profile" style="display:none"><i class="fa-solid fa-gauge-high"></i> Кабинет</a>
+      <button onclick="logout()" class="btn-nav-secondary" id="nav-logout" style="display:none"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
+    </div>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Меню">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="home.html#features"><i class="fa-solid fa-star"></i> Преимущества</a>
+    <a href="home.html#pricing"><i class="fa-solid fa-tag"></i> Тарифы</a>
+    <a href="home.html#faq"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+    <a href="servers.html"><i class="fa-solid fa-server"></i> Серверы</a>
+    <a href="login.html"    id="drawer-login"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+    <a href="dashboard.html" id="drawer-profile" style="display:none"><i class="fa-solid fa-gauge-high"></i> Личный кабинет</a>
+    <button onclick="logout()" id="drawer-logout" style="display:none"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
+    <a href="signup.html" class="drawer-primary" id="drawer-signup"><i class="fa-solid fa-user-plus"></i> Зарегистрироваться</a>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SERVERS CONTENT
+  ══════════════════════════════════ -->
+  <main class="servers-page">
+
+    <div class="servers-header">
+      <h1>🌍 Статус серверов</h1>
+      <p>Актуальная доступность в реальном времени</p>
+    </div>
+
+    <div class="servers-toolbar">
+      <div class="servers-legend">
+        <div class="legend-item">
+          <div class="legend-dot green"></div>
+          <span>Онлайн</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot yellow"></div>
+          <span>Нагрузка</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot red"></div>
+          <span>Недоступен</span>
+        </div>
+      </div>
+
+      <button class="btn btn-secondary btn-sm" id="refreshBtn" onclick="refreshServers()">
+        <i class="fa-solid fa-arrows-rotate"></i> Обновить статусы
+      </button>
+    </div>
+
+    <div class="servers-grid" id="serversGrid">
+      <!-- карточки рендерятся через JS -->
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer style="border-top:1px solid rgba(255,255,255,0.07); padding: 28px 24px; text-align:center;">
+    <p style="font-size:.8rem; color:#606060;">
+      © 2025 TurboLink VPN · <a href="home.html" style="color:#10B981;">На главную</a>
+    </p>
+  </footer>
+
+</div><!-- /page-wrapper -->
+
+<script>
+  /* Список серверов в нужном порядке */
+  const SERVER_NAMES = [
+    'Автовыбор',
+    'YouTube no ADS',
+    'Latvia',
+    'Germany - Frankfurt',
+    'Germany - Frankfurt 2',
+    'NL Amsterdam',
+    'Poland - Warszawa',
+    'England - London',
+    'Japan - Tokyo',
+    'Sweden - Stockholm',
+    'United States',
+    'Brazil - São Paulo',
+    'India - Mumbai',
+    'Indonesia - Jakarta',
+    'Bridge1 | Latvia',
+    'Bridge3 | London',
+    'Bridge4 | Finland',
+    'Bridge5 | Netherlands',
+    'Bridge6 | Japan',
+    'Bridge10 | Frankfurt',
+    'Bridge11 | Frankfurt',
+    'Bridge13 LTE | Latvia',
+    'Bridge15 | Netherlands',
+    'Latvia | WhiteList LTE',
+    'Latvia | WhiteList LTE2',
+    'WhiteList | Netherlands',
+    'Russia #2 | WhiteList',
+    'Russia #3 | WhiteList',
+    'Russia #7 | WhiteList',
+    'Russia #8 | WhiteList',
+    'Russia #9 | WhiteList',
+  ];
+
+  /* Вызывается из script.js после загрузки */
+  document.addEventListener('DOMContentLoaded', () => {
+    renderServers();
+  });
+</script>
+</body>
+</html>

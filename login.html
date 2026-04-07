@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Войти — TurboLink VPN</title>
+  <meta name="description" content="Войдите в аккаунт TurboLink VPN" />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <script defer src="https://cdn.userfront.com/@userfront/toolkit@latest/dist/web-component.umd.js"></script>
+  <script defer src="script.js"></script>
+
+  <style>
+    /* Redirect if already logged in */
+  </style>
+  <script>
+    // Redirect to dashboard if already authenticated
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = document.cookie.split(';').find(c => c.trim().startsWith('access.wbm75m9b='));
+      if (token) {
+        try {
+          const payload = JSON.parse(atob(token.split('=').slice(1).join('=').split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+          if (payload.exp * 1000 > Date.now()) window.location.href = '/dashboard.html';
+        } catch(e) {}
+      }
+    });
+  </script>
+</head>
+<body>
+
+<div class="bg-canvas">
+  <div class="bg-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+</div>
+
+<div class="page-wrapper">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <span class="nav-logo-text">Turbo<span>Link</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link"><i class="fa-solid fa-arrow-left"></i> На главную</a>
+      <a href="signup.html" class="btn-nav-primary"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+    </div>
+    <button class="nav-toggle" id="nav-toggle"><i class="fa-solid fa-bars"></i></button>
+  </nav>
+
+  <div class="nav-drawer" id="nav-drawer">
+    <a href="index.html"><i class="fa-solid fa-house"></i> На главную</a>
+    <a href="signup.html" class="drawer-primary"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+  </div>
+
+  <!-- AUTH FORM -->
+  <main class="auth-page">
+    <div class="auth-card">
+
+      <a href="index.html" class="auth-logo">
+        <div class="auth-logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        TurboLink VPN
+      </a>
+
+      <h1 class="auth-title">Добро пожаловать</h1>
+      <p class="auth-subtitle">Войдите в свой аккаунт</p>
+
+      <!-- Userfront Login Component -->
+      <login-form
+        tenant-id="wbm75m9b"
+        theme='{"colors":{"light":"#ffffff","dark":"#10B981","accent":"#10B981"},"colorScheme":"dark","size":"default"}'
+        redirect="/dashboard.html"
+      ></login-form>
+
+      <div class="auth-divider"></div>
+
+      <div class="auth-links">
+        <div class="auth-link-item">
+          <i class="fa-solid fa-user-plus" style="color:var(--accent);font-size:.85rem;"></i>
+          Нет аккаунта?
+          <a href="signup.html">Зарегистрироваться</a>
+        </div>
+        <div class="auth-link-item">
+          <i class="fa-solid fa-key" style="color:var(--text-3);font-size:.85rem;"></i>
+          <a href="reset.html" style="color:var(--text-2);">Забыли пароль?</a>
+        </div>
+      </div>
+
+    </div>
+
+    <p style="margin-top:24px;font-size:.78rem;color:var(--text-3);text-align:center;max-width:360px;">
+      <i class="fa-solid fa-lock" style="color:var(--accent);"></i>
+      Ваши данные защищены шифрованием. Мы не передаём их третьим лицам.
+    </p>
+  </main>
+
+</div>
+</body>
+</html>
