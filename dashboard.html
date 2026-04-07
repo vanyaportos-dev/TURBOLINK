@@ -14,28 +14,6 @@
 </head>
 <body>
 
-<script>
-  // Проверка имени при загрузке дашборда
-  (function() {
-    const username = localStorage.getItem('tl_username');
-    
-    if (!username) {
-      window.location.href = 'onboarding.html';
-    } else {
-      document.addEventListener('DOMContentLoaded', () => {
-        const greetEl = document.getElementById('dash-email');
-        if (greetEl) greetEl.textContent = username;
-        
-        const avatarEl = document.getElementById('dash-avatar');
-        if (avatarEl) avatarEl.textContent = username.charAt(0).toUpperCase();
-        
-        const emailInfoEl = document.getElementById('dash-email-info');
-        if (emailInfoEl) emailInfoEl.textContent = username;
-      });
-    }
-  })();
-</script>
-
 <div class="bg-canvas">
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
@@ -223,4 +201,4 @@
   });
 </script>
 </body>
-</html>
+  </html>
