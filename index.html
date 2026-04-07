@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проверка — TurboLink VPN</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:-apple-system,'Inter',sans-serif;min-height:100vh;background:#05050A;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .liquid-bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:0.65;mix-blend-mode:screen;animation:floatBlob 12s infinite alternate}
+    .blob-1{background:#10B981;width:65vw;height:65vw;top:-10%;left:-10%;animation-duration:10s}
+    .blob-2{background:#3B82F6;width:55vw;height:55vw;bottom:-20%;right:-15%;animation-duration:11s;animation-delay:-2s}
+    .blob-3{background:#8B5CF6;width:70vw;height:70vw;top:20%;left:30%;animation-duration:9s;animation-delay:-4s}
+    .blob-4{background:#F59E0B;width:50vw;height:50vw;bottom:5%;left:5%;animation-duration:13s;animation-delay:-6s;opacity:0.5}
+    .blob-5{background:#EF4444;width:60vw;height:60vw;top:50%;right:10%;animation-duration:14s;animation-delay:-8s;opacity:0.4}
+    @keyframes floatBlob{0%{transform:translate(0,0) scale(1)}20%{transform:translate(15%,-10%) scale(1.15)}40%{transform:translate(-8%,18%) scale(0.9)}60%{transform:translate(20%,12%) scale(1.1)}80%{transform:translate(-12%,-15%) scale(0.95)}100%{transform:translate(8%,-8%) scale(1.05)}}
+    .glass-capsule{position:relative;z-index:20;background:rgba(12,12,18,0.7);backdrop-filter:blur(40px);border-radius:56px;border:1px solid rgba(255,255,255,0.08);padding:48px 40px;width:90%;max-width:440px;text-align:center}
+    .message-line{min-height:100px;margin-bottom:32px}
+    .dynamic-text{font-size:18px;font-weight:500;color:#fff;opacity:1;transition:opacity .4s}
+    .dynamic-text.fade-out{opacity:0}
+    .spinner-ring{width:44px;height:44px;border:3px solid rgba(16,185,129,.25);border-top:3px solid #10B981;border-radius:50%;animation:spin .7s linear infinite;margin-bottom:32px}
+    @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+    .check-icon{font-size:72px;color:#10B981;margin-bottom:24px;animation:checkPop .5s forwards;transform:scale(0)}
+    @keyframes checkPop{0%{transform:scale(0);opacity:0}80%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+    .powered{margin-top:24px;font-size:12px;color:rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center;gap:8px}
+    .powered i{color:#10B981}
+  </style>
+</head>
+<body>
+<div class="liquid-bg">
+  <div class="blob blob-1"></div><div class="blob blob-2"></div><div class="blob blob-3"></div><div class="blob blob-4"></div><div class="blob blob-5"></div>
+</div>
+<div class="glass-capsule" id="capsule">
+  <div class="message-line" id="messageLine">
+    <div class="dynamic-text" id="firstMessage">Проверяем Ваш входной трафик...</div>
+  </div>
+  <div class="spinner-ring"></div>
+  <div class="powered"><i class="fa-solid fa-bolt"></i> POWERED BY TURBOLINK <i class="fa-solid fa-globe"></i></div>
+</div>
+<script>
+  (function(){
+    const messages = ['Анализируем сетевое подключение...','Настраиваем защищённый туннель...','Сканируем активность...','Оптимизируем маршрут...','Проверяем шифрование...','Калибруем VPN-канал...'];
+    let idx = 0;
+    const msgEl = document.getElementById('firstMessage');
+    const interval = setInterval(() => {
+      msgEl.style.opacity = '0';
+      setTimeout(() => {
+        idx = (idx + 1) % messages.length;
+        msgEl.textContent = messages[idx];
+        msgEl.style.opacity = '1';
+      }, 200);
+    }, 2100);
+    setTimeout(() => {
+      clearInterval(interval);
+      const capsule = document.getElementById('capsule');
+      capsule.innerHTML = '<div class="check-icon"><i class="fa-solid fa-circle-check"></i></div><div style="color:#10B981;font-size:14px;margin-top:8px;font-weight:500;">Вход подтверждён</div><div class="powered"><i class="fa-solid fa-bolt"></i> POWERED BY TURBOLINK <i class="fa-solid fa-globe"></i></div>';
+      setTimeout(() => {
+        sessionStorage.setItem('turbolink_checked', 'true');
+        window.location.href = 'home.html';
+      }, 900);
+    }, 6200);
+  })();
+</script>
+</body>
+</html>
